@@ -1,0 +1,16 @@
+artifact_uri: file:///e:/projects/obesity/mlruns/943000151270760839/1dcb784d61f948cd9fe0a90035a7d279/artifacts
+deleted_time: 1746035171447
+end_time: 1745765035066
+entry_point_name: ''
+experiment_id: '943000151270760839'
+lifecycle_stage: deleted
+run_id: 1dcb784d61f948cd9fe0a90035a7d279
+run_name: catboost_experiment
+run_uuid: 1dcb784d61f948cd9fe0a90035a7d279
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1745765032081
+status: 3
+tags: []
+user_id: zhora

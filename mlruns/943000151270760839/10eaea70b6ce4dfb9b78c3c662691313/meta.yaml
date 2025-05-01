@@ -1,0 +1,16 @@
+artifact_uri: file:///e:/projects/obesity/mlruns/943000151270760839/10eaea70b6ce4dfb9b78c3c662691313/artifacts
+deleted_time: 1746040715763
+end_time: 1746040341414
+entry_point_name: ''
+experiment_id: '943000151270760839'
+lifecycle_stage: deleted
+run_id: 10eaea70b6ce4dfb9b78c3c662691313
+run_name: xgb_ovr_clf_experiment
+run_uuid: 10eaea70b6ce4dfb9b78c3c662691313
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746040338124
+status: 3
+tags: []
+user_id: zhora
