@@ -10,7 +10,7 @@ variables:
   DOCKER_TLS_CERTDIR: "/certs" # directory where TLS certificates are stored for secure communication with the Docker daemon
   DOCKER_TLS_VERIFY: 1 # enables TLS verification for secure Docker operations
   DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client" # path to the client TLS certificates
-  CI_API_PATH: API
+  CI_API_PATH: "api"
   API_VERSION: 0.1
 
 services:
