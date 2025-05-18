@@ -1,0 +1,25 @@
+stages:
+  - build
+  #- deploy
+
+image: docker:20.10.16
+
+variables:
+  DOCKER_DRIVER: overlay2 # specifies the storage driver for Docker
+  CI_API_PATH: API
+  API_VERSION: 0.1
+
+services:
+  - docker:20.10.16-dind # Docker-in-Docker (DinD) service image that allows running Docker commands inside a Docker container
+
+before_script:
+  - for try in {1..10}; do sleep 0.5; docker info && break ; done # attempts to connect to the Docker daemon up ensuring the Docker service is available before proceeding
+
+build:
+  stage: build
+  script:
+    - >-
+      docker build ./API
+      --tag "${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}"
+    - docker push "${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}" # pushes the built Docker image to the specified registry, making it available for deployment
+    
