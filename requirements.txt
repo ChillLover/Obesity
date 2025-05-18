@@ -8,3 +8,4 @@ catboost
 mlflow
 optuna
 xgboost
+joblib
