@@ -5,7 +5,11 @@ stages:
 image: docker:20.10.16
 
 variables:
+  DOCKER_HOST: tcp://docker:2376
   DOCKER_DRIVER: overlay2 # specifies the storage driver for Docker
+  DOCKER_TLS_CERTDIR: "/certs" # directory where TLS certificates are stored for secure communication with the Docker daemon
+  DOCKER_TLS_VERIFY: 1 # enables TLS verification for secure Docker operations
+  DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client" # path to the client TLS certificates
   CI_API_PATH: API
   API_VERSION: 0.1
 

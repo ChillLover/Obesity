@@ -2,4 +2,3 @@ data
 .conda
 catboost_info
 mlruns
-gitlab-ci
