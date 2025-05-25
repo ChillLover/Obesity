@@ -7,7 +7,7 @@ services:
   
   ui_streamlit:
     build:
-      context: ./UI
+      context: ./Streamlit_UI
     ports:
       - "8501:8501"
     depends_on:
