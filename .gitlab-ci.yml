@@ -11,7 +11,9 @@ variables:
   DOCKER_TLS_VERIFY: 1 # enables TLS verification for secure Docker operations
   DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client" # path to the client TLS certificates
   CI_API_PATH: "api"
-  CI_PROJECT_DIR: "API"
+  CI_STREAMLIT_UI_PATH: "streamlit-ui"
+  CI_PROJECT_DIR_API: "API"
+  CI_PROJECT_DIR_STREAMLIT_UI: "Streamlit_UI"
   API_VERSION: 0.1
 
 services:
@@ -40,6 +42,12 @@ build:
       - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(echo -n "json_key:${CI_REGISTRY_KEY}" | base64 | tr -d '\n' )\"}}}" > /kaniko/.docker/config.json
       - >-
          /kaniko/executor
-         --context "${CI_PROJECT_DIR}"
-         --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
-         --destination "${CI_REGISTRY}/${CI_PROJECT_PATH}:${CI_COMMIT_SHORT_SHA}"
+         --context "${CI_PROJECT_DIR_API}"
+         --dockerfile "${CI_PROJECT_DIR_API}/Dockerfile"
+         --destination "${CI_REGISTRY}/${CI_API_PATH}:${CI_COMMIT_SHORT_SHA}"
+      - >-
+        /kaniko/executor
+        --context "${CI_PROJECT_DIR_STREAMLIT_UI}"
+        --dockerfile "${CI_PROJECT_DIR_STREAMLIT_UI}/Dockerfile"
+        --destination "${CI_REGISTRY}/${CI_STREAMLIT_UI_PATH}:${CI_COMMIT_SHORT_SHA}"
+    

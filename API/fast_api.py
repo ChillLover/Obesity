@@ -40,6 +40,14 @@ class DataToPredictControled(BaseModel):
 model = joblib.load("model.pkl")
 
 
+# @app.post("/predict_input_features")
+# async def predict_imput_features(raw_data: Row):
+#     df = pd.DataFrame.from_dict(json.loads(raw_data.model_dump_json())["data"])
+#     preds = pd.Series(model.predict(df))
+
+#     return {"Answer": preds.to_json(orien="records")}
+
+
 @app.post("/predict_features")
 async def predict_features(raw_data: DataToPredictControled):
     df = pd.DataFrame.from_dict(json.loads(raw_data.model_dump_json())["data"])

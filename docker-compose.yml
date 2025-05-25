@@ -5,7 +5,7 @@ services:
     ports:
       - "8000:8000"
   
-  streamlit:
+  ui_streamlit:
     build:
       context: ./UI
     ports:
