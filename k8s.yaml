@@ -22,7 +22,7 @@ spec:
               name: api-PROJECT_NAME # specifies the ConfigMap to use for the volume
       containers:
         - name: api-PROJECT_NAME
-          image: API__VERSION
+          image: __API__VERSION__
           ports:
             - containerPort: 8000
           volumeMounts:
