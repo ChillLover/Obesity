@@ -14,7 +14,7 @@ variables:
   CI_STREAMLIT_UI_PATH: "streamlit-ui"
   CI_PROJECT_DIR_API: "API"
   CI_PROJECT_DIR_STREAMLIT_UI: "Streamlit_UI"
-  PROJECT_NAME: Obesity
+  PROJECT_NAME: obesity
   API_VERSION: 0.1
   UI_VERSION: 0.1
 
