@@ -1,32 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api-PROJECT_NAME
+  name: api-__PROJECT_NAME__
   labels:
-    app: api-PROJECT_NAME
+    app: api-__PROJECT_NAME__
     version: v1
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: api-PROJECT_NAME
+      app: api-__PROJECT_NAME__
   template:
     metadata:
       labels:
-        app: api-PROJECT_NAME
+        app: api-__PROJECT_NAME__
         version: v1
     spec:
       volumes:
-          - name: api-PROJECT_NAME
+          - name: api-__PROJECT_NAME__
             configMap:
-              name: api-PROJECT_NAME # specifies the ConfigMap to use for the volume
+              name: api-__PROJECT_NAME__ # specifies the ConfigMap to use for the volume
       containers:
-        - name: api-PROJECT_NAME
+        - name: api-__PROJECT_NAME__
           image: __API__VERSION__
           ports:
             - containerPort: 8000
           volumeMounts:
-            - name: api-PROJECT_NAME
+            - name: api-__PROJECT_NAME__
               mountPath: /etc/nginx
               readOnly: true
           resources:
@@ -40,11 +40,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-PROJECT_NAME
+  name: api-__PROJECT_NAME__
 spec:
   selector:
-    app: api-PROJECT_NAME
-  type: NodePort
+    app: api-__PROJECT_NAME__
+  type: LoadBalancer
   ports:
     - name: http
       port: 80 # port for external access to the service
@@ -57,32 +57,32 @@ spec:
 apiVersion: apps/v1 # specifies the API version for the Deployment resource
 kind: Deployment # defines the type of Kubernetes resource being created
 metadata:
-  name: ui-PROJECT_NAME # the name of the deployment to identify this deployment resource
+  name: ui-__PROJECT_NAME__ # the name of the deployment to identify this deployment resource
   labels:
-    app: ui-PROJECT_NAME # key-value pairs that can be used to organize and select resources
+    app: ui-__PROJECT_NAME__ # key-value pairs that can be used to organize and select resources
     version: v1
 spec: # defines the desired state for the deployment
   replicas: 2 # specifies that 3 replicas (pods) of the application should be running
   selector:
     matchLabels:
-      app: ui-PROJECT_NAME # criteria for selecting the pods that this deployment will manage (it selects pods with the label app: web)
+      app: ui-__PROJECT_NAME__ # criteria for selecting the pods that this deployment will manage (it selects pods with the label app: web)
   template: # describes the pods that will be created by the deployment
     metadata:
       labels:
-        app: ui-PROJECT_NAME # labels assigned to the pods created by this deployment (must match the selector labels)
+        app: ui-__PROJECT_NAME__ # labels assigned to the pods created by this deployment (must match the selector labels)
         version: v1
     spec: # defines the specification for the pod template
       volumes:
-        - name: ui-PROJECT_NAME
+        - name: ui-__PROJECT_NAME__
           configMap:
-            name: ui-PROJECT_NAME # specifies the ConfigMap to use for the volume
+            name: ui-__PROJECT_NAME__ # specifies the ConfigMap to use for the volume
       containers: # lists the containers that will be running inside the pods
-        - name: ui-PROJECT_NAME # the name of the container
-          image: UI__VERSION # the Docker image used for this container
+        - name: ui-__PROJECT_NAME__ # the name of the container
+          image: __UI__VERSION___ # the Docker image used for this container
           ports:
-            - containerPort: 7860 # specifies that port 80 should be exposed on the container
+            - containerPort: 8501 # specifies that port 80 should be exposed on the container
           volumeMounts:
-            - name: ui-PROJECT_NAME
+            - name: ui-__PROJECT_NAME__
               mountPath: /etc/nginx
               readOnly: true  
           resources:
@@ -97,14 +97,13 @@ spec: # defines the desired state for the deployment
 apiVersion: v1 # specifies the API version for the Service resource
 kind: Service
 metadata:
-  name: ui-PROJECT_NAME
-spec:
+  name: ui-__PROJECT_NAME__
   selector:
-    app: ui-PROJECT_NAME
+    app: ui-__PROJECT_NAME__
   type: NodePort
   ports:
     - name: http
       port: 80 # port for external access to the service
-      targetPort: 7860
+      targetPort: 8501
       protocol: TCP
       nodePort: 30850 # The range of valid ports is 30000-32767

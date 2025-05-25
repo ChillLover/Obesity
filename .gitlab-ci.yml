@@ -15,6 +15,7 @@ variables:
   CI_PROJECT_DIR_API: "API"
   CI_PROJECT_DIR_STREAMLIT_UI: "Streamlit_UI"
   API_VERSION: 0.1
+  UI_VERSION: 0.1
 
 services:
   - docker:20.10.16-dind # Docker-in-Docker (DinD) service image that allows running Docker commands inside a Docker container
@@ -45,12 +46,12 @@ build:
          /kaniko/executor
          --context "${CI_PROJECT_DIR_API}"
          --dockerfile "${CI_PROJECT_DIR_API}/Dockerfile"
-         --destination "${CI_REGISTRY}/${CI_API_PATH}:${CI_COMMIT_SHORT_SHA}"
+         --destination "${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}"
       - >-
         /kaniko/executor
         --context "${CI_PROJECT_DIR_STREAMLIT_UI}"
         --dockerfile "${CI_PROJECT_DIR_STREAMLIT_UI}/Dockerfile"
-        --destination "${CI_REGISTRY}/${CI_STREAMLIT_UI_PATH}:${CI_COMMIT_SHORT_SHA}"
+        --destination "${CI_REGISTRY}/${CI_STREAMLIT_UI_PATH}:${UI_VERSION}"
 
 
 # deploy:
@@ -61,7 +62,7 @@ build:
 #     # When variables contain special characters like ', / &' ,  using '|' or '@' as a delimiter prevents sed from misinterpreting the values
 #     - >-
 #       cat k8s.yaml 
-#       | sed -e "s,UI__VERSION,${CI_REGISTRY}/${CI_GR_UI_PATH}:${UI_VERSION}," 
+#       | sed -e "s,__UI__VERSION__,${CI_REGISTRY}/${CI_GR_UI_PATH}:${UI_VERSION}," 
 #       | sed -e "s,__API__VERSION__,${CI_REGISTRY}/${CI_API_PATH}:${CI_COMMIT_SHORT_SHA}," 
 #       | sed -e "s,PROJECT_NAME,${PROJECT_NAME},"
 #       | kubectl apply -f - # reads the k8s.yaml file
