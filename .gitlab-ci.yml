@@ -43,28 +43,28 @@ build:
       # Upload the container image to the registry. The image is tagged with the commit hash.
       - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(echo -n "json_key:${CI_REGISTRY_KEY}" | base64 | tr -d '\n' )\"}}}" > /kaniko/.docker/config.json
       - >-
-         /kaniko/executor
-         --context "${CI_PROJECT_DIR_API}"
-         --dockerfile "${CI_PROJECT_DIR_API}/Dockerfile"
-         --destination "${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}"
+          /kaniko/executor
+          --context "${CI_PROJECT_DIR_API}"
+          --dockerfile "${CI_PROJECT_DIR_API}/Dockerfile"
+          --destination "${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}"
       - >-
-        /kaniko/executor
-        --context "${CI_PROJECT_DIR_STREAMLIT_UI}"
-        --dockerfile "${CI_PROJECT_DIR_STREAMLIT_UI}/Dockerfile"
-        --destination "${CI_REGISTRY}/${CI_STREAMLIT_UI_PATH}:${UI_VERSION}"
+          /kaniko/executor
+          --context "${CI_PROJECT_DIR_STREAMLIT_UI}"
+          --dockerfile "${CI_PROJECT_DIR_STREAMLIT_UI}/Dockerfile"
+          --destination "${CI_REGISTRY}/${CI_STREAMLIT_UI_PATH}:${UI_VERSION}"
 
 
-# deploy:
-#   stage: deploy
-#   image: bitnami/kubectl:latest # uses the latest Bitnami Kubectl image for interacting with Kubernetes
-#   script:
-#     - kubectl config use-context ${CI_PROJECT_PATH}:gitlab-agent #  account/project:<GitLab_agent_name> Replace <GitLab_agent_name> with the name of the agent in Managed Service for GitLab. 
-#     # When variables contain special characters like ', / &' ,  using '|' or '@' as a delimiter prevents sed from misinterpreting the values
-#     - >-
-#       cat k8s.yaml 
-#       | sed -e "s,__UI__VERSION__,${CI_REGISTRY}/${CI_GR_UI_PATH}:${UI_VERSION}," 
-#       | sed -e "s,__API__VERSION__,${CI_REGISTRY}/${CI_API_PATH}:${CI_COMMIT_SHORT_SHA}," 
-#       | sed -e "s,PROJECT_NAME,${PROJECT_NAME},"
-#       | kubectl apply -f - # reads the k8s.yaml file
-#     # and replaces the VERSION placeholder with the Docker image tag from the build stage, applies the Kubernetes configuration to deploy the app 
+deploy:
+  stage: deploy
+  image: bitnami/kubectl:latest # uses the latest Bitnami Kubectl image for interacting with Kubernetes
+  script:
+    - kubectl config use-context ${CI_PROJECT_PATH}:gitlab-agent #  account/project:<GitLab_agent_name> Replace <GitLab_agent_name> with the name of the agent in Managed Service for GitLab. 
+    # When variables contain special characters like ', / &' ,  using '|' or '@' as a delimiter prevents sed from misinterpreting the values
+    - >-
+      cat k8s.yaml 
+      | sed -e "s,__UI__VERSION__,${CI_REGISTRY}/${CI_GR_UI_PATH}:${UI_VERSION}," 
+      | sed -e "s,__API__VERSION__,${CI_REGISTRY}/${CI_API_PATH}:${CI_COMMIT_SHORT_SHA}," 
+      | sed -e "s,PROJECT_NAME,${PROJECT_NAME},"
+      | kubectl apply -f - # reads the k8s.yaml file
+    # and replaces the VERSION placeholder with the Docker image tag from the build stage, applies the Kubernetes configuration to deploy the app 
     
