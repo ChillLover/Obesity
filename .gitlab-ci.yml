@@ -1,6 +1,6 @@
 stages:
   - build
-  #- deploy
+  - deploy
 
 image: docker:20.10.16
 
