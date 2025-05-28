@@ -25,10 +25,10 @@ spec:
           image: __API__VERSION__
           ports:
             - containerPort: 8000
-          volumeMounts:
-            - name: api-__PROJECT_NAME__
-              mountPath: /etc/nginx
-              readOnly: true
+          # volumeMounts:
+          #   - name: api-__PROJECT_NAME__
+          #     mountPath: /etc/nginx
+          #     readOnly: true
           resources:
             limits:
               cpu: 1.5
@@ -81,10 +81,10 @@ spec: # defines the desired state for the deployment
           image: __UI__VERSION___ # the Docker image used for this container
           ports:
             - containerPort: 8501 # specifies that port 80 should be exposed on the container
-          volumeMounts:
-            - name: ui-__PROJECT_NAME__
-              mountPath: /etc/nginx
-              readOnly: true  
+          # volumeMounts:
+          #   - name: ui-__PROJECT_NAME__
+          #     mountPath: /etc/nginx
+          #     readOnly: true  
           resources:
             limits:
               cpu: 1.5
