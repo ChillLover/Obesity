@@ -63,7 +63,7 @@ deploy:
     # When variables contain special characters like ', / &' ,  using '|' or '@' as a delimiter prevents sed from misinterpreting the values
     - >-
       cat k8s.yaml 
-      | sed -e "s,__UI__VERSION__,${CI_REGISTRY}/${CI_GR_UI_PATH}:${UI_VERSION}," 
+      | sed -e "s,__UI__VERSION__,${CI_REGISTRY}/${CI_STREAMLIT_UI_PATH}:${UI_VERSION}," 
       | sed -e "s,__API__VERSION__,${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}," 
       | sed -e "s,__PROJECT_NAME__,${PROJECT_NAME},"
       | kubectl apply -f - # reads the k8s.yaml file
