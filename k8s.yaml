@@ -156,7 +156,6 @@ spec:
   tls:
     - hosts:
         - projects-pea.ru # Domain name for which the certificate is issued
-      secretName: yc-certmgr-cert-id-TLS_ID # Secret ID in Certificate Manager
   rules:
     - host: projects-pea.ru
       http:
