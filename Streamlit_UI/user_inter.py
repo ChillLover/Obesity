@@ -18,8 +18,22 @@ if input_data:
 
         if response.status_code == 200:
             preds = pd.read_json(response.json()["Answer"], orient="records")
-            preds.rename(columns={0: "Предсказанные значения"}, inplace=True)
-            st.write(preds)
+            preds.rename(columns={0: "Predictions"}, inplace=True)
+            result = pd.concat([preds, pd.DataFrame.from_dict(data, orient="columns")], axis=1)
+
+            result["Predictions"] = result["Predictions"].map({
+                0: "Insufficient_Weight",
+                1: "Normal_Weight",
+                2: "Overweight_Level_I",
+                3: "Overweight_Level_II",
+                4: "Obesity_Type_I",
+                5: "Obesity_Type_II",
+                6: "Obesity_Type_III"
+            })
+
+            st.write(result)
+
+            st.download_button("Скачать предсказания", data=result.to_csv(), file_name="preds.csv")
         
         else:
             st.error(f"Ошибка API: {response.text}")
