@@ -78,7 +78,7 @@ spec: # defines the desired state for the deployment
             name: ui-__PROJECT_NAME__ # specifies the ConfigMap to use for the volume
       containers: # lists the containers that will be running inside the pods
         - name: ui-__PROJECT_NAME__ # the name of the container
-          image: __UI__VERSION___ # the Docker image used for this container
+          image: __UI__VERSION__ # the Docker image used for this container
           ports:
             - containerPort: 8501 # specifies that port 80 should be exposed on the container
           # volumeMounts:
