@@ -14,7 +14,7 @@ if input_data:
     if st.button("Получить предсказания"):
         data = data.drop("Obesity", axis=1).to_dict(orient="records")
 
-        response = requests.post("http://api:8000/predict_features", json={"data": data})
+        response = requests.post("http://api-obesity/predict_features", json={"data": data})
 
         if response.status_code == 200:
             preds = pd.read_json(response.json()["Answer"], orient="records")
