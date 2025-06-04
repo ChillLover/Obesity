@@ -24,14 +24,6 @@ services:
 before_script:
   - for try in {1..10}; do sleep 0.5; docker info && break ; done # attempts to connect to the Docker daemon up ensuring the Docker service is available before proceeding
 
-# build:
-#   stage: build
-#   script:
-#     - >-
-#       docker build ./API
-#       --tag "${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}"
-#     - docker push "${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}" # pushes the built Docker image to the specified registry, making it available for deployment
-
 
 # build:
 #    stage: build
