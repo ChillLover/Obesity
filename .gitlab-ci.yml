@@ -52,7 +52,7 @@ deploy:
   image: bitnami/kubectl:latest # uses the latest Bitnami Kubectl image for interacting with Kubernetes
   script:
     - kubectl config use-context ${CI_PROJECT_PATH}:gitlab-agent #  account/project:<GitLab_agent_name> Replace <GitLab_agent_name> with the name of the agent in Managed Service for GitLab. 
-    - kubectl create namespace obesity
+    #- kubectl create namespace obesity
     - kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.17.2/cert-manager.yaml
     
     - kubectl wait --for=condition=available --timeout=300s deployment/cert-manager -n cert-manager
@@ -65,8 +65,9 @@ deploy:
       | sed -e "s,__UI__VERSION__,${CI_REGISTRY}/${CI_STREAMLIT_UI_PATH}:${UI_VERSION}," 
       | sed -e "s,__API__VERSION__,${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}," 
       | sed -e "s,__PROJECT_NAME__,${PROJECT_NAME},"
-      | sed -e "s,__ALB_INGRESS_SUBNET__,${ALB_INGRESS_SUBNET},"
-      | sed -e "s,__ALB_INGRESS_SEC_GROUP__,${ALB_INGRESS_SEC_GROUP},"
-      | kubectl apply -f - # reads the k8s.yaml file
+      | sed -e "s|__ALB_INGRESS_SUBNET__|${ALB_INGRESS_SUBNET}|"
+      | sed -e "s|__ALB_INGRESS_SEC_GROUP__|${ALB_INGRESS_SEC_GROUP}|"
+      | kubectl apply -f -
+    # reads the k8s.yaml file
     # and replaces the VERSION placeholder with the Docker image tag from the build stage, applies the Kubernetes configuration to deploy the app 
     
