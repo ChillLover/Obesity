@@ -52,7 +52,7 @@ deploy:
   image: bitnami/kubectl:latest # uses the latest Bitnami Kubectl image for interacting with Kubernetes
   script:
     - kubectl config use-context ${CI_PROJECT_PATH}:gitlab-agent #  account/project:<GitLab_agent_name> Replace <GitLab_agent_name> with the name of the agent in Managed Service for GitLab. 
-    - kubectl create namespace obecity
+    - kubectl create namespace obesity
     - kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.17.2/cert-manager.yaml
     
     - kubectl wait --for=condition=available --timeout=300s deployment/cert-manager -n cert-manager
