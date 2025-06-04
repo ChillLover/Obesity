@@ -152,6 +152,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-buffering: "off"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   tls:
     - hosts:
@@ -174,3 +175,18 @@ spec:
                 name: ui-__PROJECT_NAME__
                 port:
                   number: 80
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata: 
+  name: letsencrypt-prod
+spec:
+  acme:
+    serevr: https://acme-v02.api.letsencrypt.org/directory
+    email: zhora.polyakov95@mail.ru
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
