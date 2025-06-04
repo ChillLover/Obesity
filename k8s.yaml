@@ -182,7 +182,7 @@ metadata:
   name: letsencrypt-prod
 spec:
   acme:
-    serevr: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
     email: zhora.polyakov95@mail.ru
     privateKeySecretRef:
       name: letsencrypt-prod
