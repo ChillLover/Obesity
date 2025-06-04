@@ -168,6 +168,13 @@ spec:
                 name: api-__PROJECT_NAME__
                 port:
                   number: 80
+          - path: / # path to the service, get from  location
+            pathType: Prefix
+            backend:
+              service:
+                name: api-__PROJECT_NAME__
+                port:
+                  number: 80
           - path: /ui-__PROJECT_NAME__
             pathType: Prefix
             backend:
