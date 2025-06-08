@@ -242,4 +242,14 @@ spec:
   dnsNames:
     # Домен должен входить в вашу публичную зону Cloud DNS
     - projects-pea.ru
-
+---
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  namespace: __PROJECT_NAME__
+  labels:
+    app.kubernetes.io/component: controller
+  name: ingress-alb
+spec:
+  controller: ingress.alb.yc.io/yc-alb-ingress-controller
+---
