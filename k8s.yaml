@@ -186,6 +186,7 @@ spec:
   tls:
     - hosts:
         - projects-pea.ru # Domain name for which the certificate is issued
+      secretName: yc-certmgr-cert-id-<certificate_ID>
   rules:
     - host: projects-pea.ru
       http:
@@ -212,18 +213,33 @@ spec:
                 port:
                   number: 80
 ---
+# apiVersion: cert-manager.io/v1
+# kind: ClusterIssuer
+# metadata: 
+#   name: letsencrypt-prod
+#   namespace: __PROJECT_NAME__
+# spec:
+#   acme:
+#     server: https://acme-v02.api.letsencrypt.org/directory
+#     email: zhora.polyakov95@mail.ru
+#     privateKeySecretRef:
+#       name: letsencrypt-prod
+#     solvers:
+#     - http01:
+#         ingress:
+#           class: nginx
 apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata: 
-  name: letsencrypt-prod
+kind: Certificate
+metadata:
+  name: projects-pea.ru
   namespace: __PROJECT_NAME__
 spec:
-  acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
-    email: zhora.polyakov95@mail.ru
-    privateKeySecretRef:
-      name: letsencrypt-prod
-    solvers:
-    - http01:
-        ingress:
-          class: nginx
+  secretName: domain-name-secret
+  issuerRef:
+    # ClusterIssuer, созданный вместе с Yandex CloudDNS ACME webhook
+    name: yc-clusterissuer
+    kind: ClusterIssuer
+  dnsNames:
+    # Домен должен входить в вашу публичную зону Cloud DNS
+    - projects-pea.ru
+
