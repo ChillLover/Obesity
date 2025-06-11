@@ -12,7 +12,7 @@ variables:
   DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client" # path to the client TLS certificates
   CI_API_PATH: "api"
   CI_STREAMLIT_UI_PATH: "streamlit-ui"
-  CI_GRADIO_UI_PATH: "gradio"
+  CI_GRADIO_UI_PATH: "gradio-ui"
   CI_PROJECT_DIR_API: "API"
   CI_PROJECT_DIR_STREAMLIT_UI: "Streamlit_UI"
   CI_PROJECT_DIR_GRADIO_UI: "GradIO_UI"
@@ -47,7 +47,7 @@ build:
       - >-
           /kaniko/executor
           --context "${CI_PROJECT_DIR_GRADIO_UI}"
-          --dockerfile "${CI_PROJECT_DIR_GRADIO_UI}/Dockerfile"
+          --dockerfile "gradio_docker/Dockerfile"
           --destination "${CI_REGISTRY}/${CI_GRADIO_UI_PATH}:${GRADIO_UI_VERSION}"
 
 
