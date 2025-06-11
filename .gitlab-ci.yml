@@ -47,7 +47,7 @@ build:
       - >-
           /kaniko/executor
           --context "${CI_PROJECT_DIR_GRADIO_UI}"
-          --dockerfile "gradio_docker/Dockerfile"
+          --dockerfile "${CI_PROJECT_DIR_GRADIO_UI}/Dockerfile"
           --destination "${CI_REGISTRY}/${CI_GRADIO_UI_PATH}:${GRADIO_UI_VERSION}"
 
 
