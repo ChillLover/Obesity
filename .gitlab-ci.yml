@@ -15,7 +15,7 @@ variables:
   CI_GRADIO_UI_PATH: "gradio-ui"
   CI_PROJECT_DIR_API: "API"
   CI_PROJECT_DIR_STREAMLIT_UI: "Streamlit_UI"
-  CI_PROJECT_DIR_GRADIO_UI: "gradio_ui"
+  CI_PROJECT_DIR_GRADIO_UI: "GradIO_UI"
   PROJECT_NAME: obesity
   API_VERSION: 0.1
   UI_VERSION: 0.2
@@ -39,11 +39,11 @@ build:
       - mkdir -p /kaniko/.docker
       # Upload the container image to the registry. The image is tagged with the commit hash.
       - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(echo -n "json_key:${CI_REGISTRY_KEY}" | base64 | tr -d '\n' )\"}}}" > /kaniko/.docker/config.json
-      - >-
-          /kaniko/executor
-          --context "${CI_PROJECT_DIR_API}"
-          --dockerfile "${CI_PROJECT_DIR_API}/Dockerfile"
-          --destination "${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}"
+      # - >-
+      #     /kaniko/executor
+      #     --context "${CI_PROJECT_DIR_API}"
+      #     --dockerfile "${CI_PROJECT_DIR_API}/Dockerfile"
+      #     --destination "${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}"
       - >-
           /kaniko/executor
           --context "${CI_PROJECT_DIR_GRADIO_UI}"
