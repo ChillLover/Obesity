@@ -9,7 +9,7 @@ def get_preds(data):
     data = pd.read_csv(data)
     data = data.drop("Obesity", axis=1).to_dict(orient="records")
 
-    response = requests.post("http://127.0.0.1:8000/predict_features", json={"data": data})
+    response = requests.post("http://api:8000/predict_features", json={"data": data})
 
     if response.status_code == 200:
         preds = pd.read_json(response.json()["Answer"], orient="records")
@@ -44,4 +44,4 @@ with gr.Blocks() as demo:
         outputs=[output, download_button],
     )
 
-demo.launch()
+demo.launch(server_name="0.0.0.0")

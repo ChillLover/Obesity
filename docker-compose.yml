@@ -12,3 +12,11 @@ services:
       - "8501:8501"
     depends_on:
       - api
+
+  ui_gradio:
+    build:
+      context: ./GradIO_UI
+    ports:
+      - "7860:7860"
+    depends_on:
+      - api

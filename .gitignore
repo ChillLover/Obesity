@@ -3,3 +3,4 @@ data
 catboost_info
 mlruns
 testAPI.ipynb
+.gradio/flagged

@@ -8,6 +8,6 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY gradio.py .
+COPY gradio_ui.py .
 
-CMD ["gradio", "gradio_ui.py"]
+CMD ["python", "gradio_ui.py"]
