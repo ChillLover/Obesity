@@ -6,12 +6,13 @@ from catboost import CatBoostClassifier
 from pydantic import BaseModel, Field
 import pandas as pd
 from typing import List, Optional
+import mlflow
 
 app = FastAPI()
 
 
-class DataToPredictStr(BaseModel):
-    data: str
+# class DataToPredictStr(BaseModel):
+#     data: str
 
 
 class Row(BaseModel):
@@ -56,9 +57,9 @@ async def predict_features(raw_data: DataToPredictControled):
     return {"Answer": preds.to_json(orient="records")}
 
 
-@app.post("/predict")
-async def predict(raw_data: DataToPredictStr):
-    df = pd.read_json(raw_data.data, orient="records")
-    preds = pd.Series(model.predict(df))
+# @app.post("/predict")
+# async def predict(raw_data: DataToPredictStr):
+#     df = pd.read_json(raw_data.data, orient="records")
+#     preds = pd.Series(model.predict(df))
 
-    return {"Answer": preds.to_json(orient="records")}
+#     return {"Answer": preds.to_json(orient="records")}
