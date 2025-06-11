@@ -7,7 +7,7 @@ import gradio as gr
 def get_preds(data):
     data = data.name
     data = pd.read_csv(data)
-    data = data.drop("Obesity", axis=1).to_dict(orient="records")
+    data = data.to_dict(orient="records")
 
     response = requests.post("http://api:8000/predict_features", json={"data": data})
 

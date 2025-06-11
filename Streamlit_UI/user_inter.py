@@ -12,7 +12,7 @@ if input_data:
     st.write("Содержимое файла: ", data)
 
     if st.button("Получить предсказания"):
-        data = data.drop("Obesity", axis=1).to_dict(orient="records")
+        data = data.to_dict(orient="records")
 
         response = requests.post("http://api-obesity/predict_features", json={"data": data})
 
@@ -33,7 +33,7 @@ if input_data:
 
             st.write(result)
 
-            st.download_button("Скачать предсказания", data=result.to_csv(), file_name="preds.csv")
+            st.download_button("Скачать предсказания", data=result.to_csv(index=False), file_name="preds.csv")
         
         else:
             st.error(f"Ошибка API: {response.text}")
