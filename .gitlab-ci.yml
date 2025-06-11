@@ -12,7 +12,7 @@ variables:
   DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client" # path to the client TLS certificates
   CI_API_PATH: "api"
   CI_STREAMLIT_UI_PATH: "streamlit-ui"
-  CI_GRADIO_UI_PATH: "gradio-ui"
+  CI_GRADIO_UI_PATH: "gradio"
   CI_PROJECT_DIR_API: "API"
   CI_PROJECT_DIR_STREAMLIT_UI: "Streamlit_UI"
   CI_PROJECT_DIR_GRADIO_UI: "GradIO_UI"
@@ -20,7 +20,7 @@ variables:
   API_VERSION: 0.1
   UI_VERSION: 0.2
   STREAMLIT_UI_VERSION: 0.2
-  GRADIO_UI_VERSION: 0.1
+  GRADIO_UI_VERSION: 0.3
 
 services:
   - docker:20.10.16-dind # Docker-in-Docker (DinD) service image that allows running Docker commands inside a Docker container
