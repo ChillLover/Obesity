@@ -10,3 +10,4 @@ optuna
 xgboost
 joblib
 streamlit
+boto3
