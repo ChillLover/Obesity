@@ -39,11 +39,16 @@ build:
       - mkdir -p /kaniko/.docker
       # Upload the container image to the registry. The image is tagged with the commit hash.
       - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(echo -n "json_key:${CI_REGISTRY_KEY}" | base64 | tr -d '\n' )\"}}}" > /kaniko/.docker/config.json
+      - >-
+          /kaniko/executor
+          --context "${CI_PROJECT_DIR_API}"
+          --dockerfile "${CI_PROJECT_DIR_API}/Dockerfile"
+          --destination "${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}"
       # - >-
       #     /kaniko/executor
-      #     --context "${CI_PROJECT_DIR_API}"
-      #     --dockerfile "${CI_PROJECT_DIR_API}/Dockerfile"
-      #     --destination "${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}"
+      #     --context "${CI_PROJECT_DIR_STREAMLIT_UI}"
+      #     --dockerfile "${CI_PROJECT_DIR_STREAMLIT_UI}/Dockerfile"
+      #     --destination "${CI_REGISTRY}/${CI_STREAMLIT_UI_PATH}:${STREAMLIT_UI_VERSION}"
       - >-
           /kaniko/executor
           --context "${CI_PROJECT_DIR_GRADIO_UI}"
@@ -75,11 +80,3 @@ deploy:
       | kubectl apply -f -
     # reads the k8s.yaml file
     # and replaces the VERSION placeholder with the Docker image tag from the build stage, applies the Kubernetes configuration to deploy the app 
-
-  
-        # - >-
-      #     /kaniko/executor
-      #     --context "${CI_PROJECT_DIR_STREAMLIT_UI}"
-      #     --dockerfile "${CI_PROJECT_DIR_STREAMLIT_UI}/Dockerfile"
-      #     --destination "${CI_REGISTRY}/${CI_STREAMLIT_UI_PATH}:${STREAMLIT_UI_VERSION}"
-    
