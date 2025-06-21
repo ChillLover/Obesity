@@ -53,8 +53,6 @@ spec:
       targetPort: 8000
       #protocol: TCP
       #nodePort: 30800 # The range of valid ports is 30000-32767
-
-
 ---
 apiVersion: apps/v1 # specifies the API version for the Deployment resource
 kind: Deployment # defines the type of Kubernetes resource being created
@@ -95,7 +93,6 @@ spec: # defines the desired state for the deployment
             requests:
               cpu: 0.75
               memory: 1Gi
-
 ---
 apiVersion: v1 # specifies the API version for the Service resource
 kind: Service
@@ -186,19 +183,12 @@ spec:
   tls:
     - hosts:
         - projects-pea.ru # Domain name for which the certificate is issued
-      secretName: yc-certmgr-cert-id-6da254592708e3ee4953b2a49c48f82cc00
+      secretName: yc-certmgr-cert-id-63f9ac92b3887292ffa20f764c387ffa3a1
   rules:
     - host: projects-pea.ru
       http:
         paths:
           - path: /api-__PROJECT_NAME__ # path to the service, get from  location
-            pathType: Prefix
-            backend:
-              service:
-                name: api-__PROJECT_NAME__
-                port:
-                  number: 80
-          - path: / # path to the service, get from  location
             pathType: Prefix
             backend:
               service:
