@@ -182,10 +182,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - projects-pea.ru # Domain name for which the certificate is issued
+        - obesity.projects-pea.ru # Domain name for which the certificate is issued
       secretName: yc-certmgr-cert-id-63f9ac92b3887292ffa20f764c387ffa3a1
   rules:
-    - host: projects-pea.ru
+    - host: obesity.projects-pea.ru
       http:
         paths:
           - path: /api-__PROJECT_NAME__ # path to the service, get from  location
