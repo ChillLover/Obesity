@@ -26,10 +26,10 @@ spec:
           image: __API__VERSION__
           ports:
             - containerPort: 8000
-          # volumeMounts:
-          #   - name: api-__PROJECT_NAME__
-          #     mountPath: /etc/nginx
-          #     readOnly: true
+          volumeMounts:
+            - name: api-__PROJECT_NAME__
+              mountPath: /etc/nginx
+              readOnly: true
           resources:
             limits:
               cpu: 1.5
@@ -46,7 +46,7 @@ metadata:
 spec:
   selector:
     app: api-__PROJECT_NAME__
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: http
       port: 80 # port for external access to the service
@@ -82,10 +82,10 @@ spec: # defines the desired state for the deployment
           image: __UI__VERSION__ # the Docker image used for this container
           ports:
             - containerPort: 7860 # specifies that port 80 should be exposed on the container
-          # volumeMounts:
-          #   - name: ui-__PROJECT_NAME__
-          #     mountPath: /etc/nginx
-          #     readOnly: true  
+          volumeMounts:
+            - name: ui-__PROJECT_NAME__
+              mountPath: /etc/nginx
+              readOnly: true  
           resources:
             limits:
               cpu: 1.5
@@ -102,7 +102,7 @@ metadata:
 spec:
   selector:
     app: ui-__PROJECT_NAME__
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: http
       port: 80 # port for external access to the service
@@ -128,7 +128,7 @@ data:
       keepalive_timeout  65;
       server {
         listen 80;
-        server_name projects-pea.ru www.projects-pea.ru;
+        server_name obesity.projects-pea.ru www.obesity.projects-pea.ru;
         location /ui-__PROJECT_NAME__ {
           proxy_pass http://ui-__PROJECT_NAME__;
           proxy_http_version 1.1;
@@ -175,20 +175,20 @@ metadata:
     ingress.alb.yc.io/subnets: __ALB_INGRESS_SUBNET__  # One or more subnets hosting the Application Load Balancer L7 load balancer.
     ingress.alb.yc.io/security-groups: __ALB_INGRESS_SEC_GROUP__  # Security group for the Application Load Balancer L7 load balancer. 
     # cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    # nginx.ingress.kubernetes.io/proxy-body-size: "0"
-    # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    # nginx.ingress.kubernetes.io/proxy-buffering: "off"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-buffering: "off"
 spec:
   tls:
     - hosts:
         - obesity.projects-pea.ru # Domain name for which the certificate is issued
-      secretName: yc-certmgr-cert-id-63f9ac92b3887292ffa20f764c387ffa3a1
+      secretName: yc-certmgr-cert-id-64586520b81381d42d8d5519a430e445e78
   rules:
     - host: obesity.projects-pea.ru
       http:
         paths:
-          - path: /api-__PROJECT_NAME__ # path to the service, get from  location
+          - path: / # path to the service, get from  location
             pathType: Prefix
             backend:
               service:
