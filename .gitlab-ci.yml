@@ -64,9 +64,9 @@ deploy:
     #- kubectl create namespace obesity
     #- kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.17.2/cert-manager.yaml
     
-    - kubectl wait --for=condition=available --timeout=300s deployment/cert-manager -n cert-manager
-    - kubectl wait --for=condition=available --timeout=300s deployment/cert-manager-webhook -n cert-manager
-    - kubectl wait --for=condition=available --timeout=300s deployment/cert-manager-cainjector -n cert-manager
+    # - kubectl wait --for=condition=available --timeout=300s deployment/cert-manager -n cert-manager
+    # - kubectl wait --for=condition=available --timeout=300s deployment/cert-manager-webhook -n cert-manager
+    # - kubectl wait --for=condition=available --timeout=300s deployment/cert-manager-cainjector -n cert-manager
 
     # When variables contain special characters like ', / &' ,  using '|' or '@' as a delimiter prevents sed from misinterpreting the values
     # | sed -e "s,__UI__VERSION__,${CI_REGISTRY}/${CI_STREAMLIT_UI_PATH}:${STREAMLIT_UI_VERSION}," 
