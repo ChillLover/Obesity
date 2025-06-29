@@ -192,14 +192,14 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: api-__PROJECT_NAME__
+                name: api-__PROJECT_NAME__-test
                 port:
                   number: 80
           - path: /ui-__PROJECT_NAME__
             pathType: Prefix
             backend:
               service:
-                name: ui-__PROJECT_NAME__
+                name: ui-__PROJECT_NAME__-test
                 port:
                   number: 80
 ---
