@@ -54,6 +54,28 @@ spec:
       #protocol: TCP
       #nodePort: 30800 # The range of valid ports is 30000-32767
 ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: api-__PROJECT_NAME__
+#   namespace: __PROJECT_NAME__
+# data:
+#   nginx.conf: |
+#     worker_processes auto;
+#     events {
+#     }
+#     http {
+#       server {
+#         listen 80 ;
+#         location = / {
+#           proxy_pass http://api-__PROJECT_NAME__:80;
+#           proxy_set_header Host $host;
+#           proxy_set_header X-Real-IP $remote_addr;
+#           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#         }
+#       }
+#     }
+---
 apiVersion: apps/v1 # specifies the API version for the Deployment resource
 kind: Deployment # defines the type of Kubernetes resource being created
 metadata:
@@ -142,28 +164,6 @@ spec:
 #       }
 #     }
 ---
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   name: api-__PROJECT_NAME__
-#   namespace: __PROJECT_NAME__
-# data:
-#   nginx.conf: |
-#     worker_processes auto;
-#     events {
-#     }
-#     http {
-#       server {
-#         listen 80 ;
-#         location = / {
-#           proxy_pass http://api-__PROJECT_NAME__:80;
-#           proxy_set_header Host $host;
-#           proxy_set_header X-Real-IP $remote_addr;
-#           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-#         }
-#       }
-#     }
----
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -202,71 +202,4 @@ spec:
                 name: ui-__PROJECT_NAME__-test
                 port:
                   number: 80
----
-# apiVersion: cert-manager.io/v1
-# kind: ClusterIssuer
-# metadata: 
-#   name: letsencrypt-prod
-#   namespace: __PROJECT_NAME__
-# spec:
-#   acme:
-#     server: https://acme-v02.api.letsencrypt.org/directory
-#     email: zhora.polyakov95@mail.ru
-#     privateKeySecretRef:
-#       name: letsencrypt-prod
-#     solvers:
-#     - http01:
-#         ingress:
-#           class: nginx
-# apiVersion: cert-manager.io/v1
-# kind: Certificate
-# metadata:
-#   name: projects-pea.ru
-#   namespace: __PROJECT_NAME__
-# spec:
-#   secretName: domain-name-secret
-#   issuerRef:
-#     # ClusterIssuer, созданный вместе с Yandex CloudDNS ACME webhook
-#     name: yc-clusterissuer
-#     kind: ClusterIssuer
-#   dnsNames:
-#     # Домен должен входить в вашу публичную зону Cloud DNS
-#     - projects-pea.ru
----
-# apiVersion: networking.k8s.io/v1
-# kind: IngressClass
-# metadata:
-#   namespace: __PROJECT_NAME__
-#   labels:
-#     app.kubernetes.io/component: controller
-#   name: ingress-alb
-# spec:
-#   controller: ingress.alb.yc.io/yc-alb-ingress-controller
----
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: ui-__PROJECT_NAME__
-#   annotations:
-#     kubernetes.io/ingress.class: "nginx"
-#     nginx.ingress.kubernetes.io/proxy-body-size: "0"
-#     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-#     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-#     nginx.ingress.kubernetes.io/proxy-buffering: "off"
-# spec:
-#   rules:
-#     - host: projects-pea.ru
-#       http:
-#         paths:
-#           - path: /
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: ui-__PROJECT_NAME__ # name of service ui
-#                 port:
-#                   number: 80
-#   tls:
-#     - hosts:
-#         - projects-pea.ru
-#       secretName: yc-certmgr-cert-id-tls-id # Secret ID in Certificate Manager
 ---
