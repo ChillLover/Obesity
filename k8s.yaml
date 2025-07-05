@@ -41,7 +41,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-__PROJECT_NAME__-test
+  name: api-__PROJECT_NAME__
   namespace: __PROJECT_NAME__
 spec:
   selector:
@@ -119,7 +119,7 @@ spec: # defines the desired state for the deployment
 apiVersion: v1 # specifies the API version for the Service resource
 kind: Service
 metadata:
-  name: ui-__PROJECT_NAME__-test
+  name: ui-__PROJECT_NAME__
   namespace: __PROJECT_NAME__
 spec:
   selector:
@@ -167,7 +167,7 @@ data:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: alb-__PROJECT_NAME__-test
+  name: alb-__PROJECT_NAME__
   namespace: __PROJECT_NAME__
   annotations:
     ingress.alb.yc.io/external-ipv4-address: 51.250.115.214 #Public access to the load balancer from the internet. #Enter the obtained IP address or set auto to get a new IP address automatically
@@ -192,14 +192,14 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: api-__PROJECT_NAME__-test
+                name: api-__PROJECT_NAME__
                 port:
                   number: 80
           - path: /ui-__PROJECT_NAME__
             pathType: Prefix
             backend:
               service:
-                name: ui-__PROJECT_NAME__-test
+                name: ui-__PROJECT_NAME__
                 port:
                   number: 80
 ---
