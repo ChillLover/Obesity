@@ -1,5 +1,5 @@
 stages:
-  - build
+  # - build
   - deploy
 
 image: docker:20.10.16
@@ -29,31 +29,31 @@ before_script:
   - for try in {1..10}; do sleep 0.5; docker info && break ; done # attempts to connect to the Docker daemon up ensuring the Docker service is available before proceeding
 
 
-build:
-  stage: build
-   # Using kaniko to create a container inside another container for enhanced security.
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  script:
-      - mkdir -p /kaniko/.docker
-      # Upload the container image to the registry. The image is tagged with the commit hash.
-      - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(echo -n "json_key:${CI_REGISTRY_KEY}" | base64 | tr -d '\n' )\"}}}" > /kaniko/.docker/config.json
-      - >-
-          /kaniko/executor
-          --context "${CI_PROJECT_DIR_API}"
-          --dockerfile "${CI_PROJECT_DIR_API}/Dockerfile"
-          --destination "${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}"
-      # - >-
-      #     /kaniko/executor
-      #     --context "${CI_PROJECT_DIR_STREAMLIT_UI}"
-      #     --dockerfile "${CI_PROJECT_DIR_STREAMLIT_UI}/Dockerfile"
-      #     --destination "${CI_REGISTRY}/${CI_STREAMLIT_UI_PATH}:${STREAMLIT_UI_VERSION}"
-      - >-
-          /kaniko/executor
-          --context "${CI_PROJECT_DIR_GRADIO_UI}"
-          --dockerfile "${CI_PROJECT_DIR_GRADIO_UI}/Dockerfile"
-          --destination "${CI_REGISTRY}/${CI_GRADIO_UI_PATH}:${GRADIO_UI_VERSION}"
+# build:
+#   stage: build
+#    # Using kaniko to create a container inside another container for enhanced security.
+#   image:
+#     name: gcr.io/kaniko-project/executor:debug
+#     entrypoint: [""]
+#   script:
+#       - mkdir -p /kaniko/.docker
+#       # Upload the container image to the registry. The image is tagged with the commit hash.
+#       - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(echo -n "json_key:${CI_REGISTRY_KEY}" | base64 | tr -d '\n' )\"}}}" > /kaniko/.docker/config.json
+#       - >-
+#           /kaniko/executor
+#           --context "${CI_PROJECT_DIR_API}"
+#           --dockerfile "${CI_PROJECT_DIR_API}/Dockerfile"
+#           --destination "${CI_REGISTRY}/${CI_API_PATH}:${API_VERSION}"
+#       # - >-
+#       #     /kaniko/executor
+#       #     --context "${CI_PROJECT_DIR_STREAMLIT_UI}"
+#       #     --dockerfile "${CI_PROJECT_DIR_STREAMLIT_UI}/Dockerfile"
+#       #     --destination "${CI_REGISTRY}/${CI_STREAMLIT_UI_PATH}:${STREAMLIT_UI_VERSION}"
+#       - >-
+#           /kaniko/executor
+#           --context "${CI_PROJECT_DIR_GRADIO_UI}"
+#           --dockerfile "${CI_PROJECT_DIR_GRADIO_UI}/Dockerfile"
+#           --destination "${CI_REGISTRY}/${CI_GRADIO_UI_PATH}:${GRADIO_UI_VERSION}"
 
 
 deploy:
@@ -77,6 +77,7 @@ deploy:
       | sed -e "s,__PROJECT_NAME__,${PROJECT_NAME},"
       | sed -e "s|__ALB_INGRESS_SUBNET__|${ALB_INGRESS_SUBNET}|"
       | sed -e "s|__ALB_INGRESS_SEC_GROUP__|${ALB_INGRESS_SEC_GROUP}|"
+      | sed -e "s|__PUBLIC_IP__|${PUBLIC_IP}|"
       | kubectl apply -f -
     # reads the k8s.yaml file
     # and replaces the VERSION placeholder with the Docker image tag from the build stage, applies the Kubernetes configuration to deploy the app 
