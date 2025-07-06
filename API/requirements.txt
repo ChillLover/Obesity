@@ -5,3 +5,6 @@ joblib
 fastapi 
 uvicorn
 mlflow
+clickhouse_connect
+python-dotenv
+boto3

@@ -6,10 +6,24 @@ from catboost import CatBoostClassifier
 from pydantic import BaseModel, Field
 import pandas as pd
 from typing import List, Optional
+import clickhouse_connect
+from dotenv import load_dotenv
 import mlflow
+import os
+
+
+load_dotenv()
+
+mlflow.set_tracking_uri("http://84.201.180.128:8000/")
+
+client = clickhouse_connect.get_client(host=os.getenv("CH_IP"), port=8123, username=os.getenv("CLICKHOUSE_USER"), password=os.getenv("CLICKHOUSE_PASSWORD"))
+
+run = client.query_df("select mlflow_url from logs.results order by save_date desc limit 1;").iloc[0, 0]
+
+model = mlflow.pyfunc.load_model(run)
+
 
 app = FastAPI()
-
 
 # class DataToPredictStr(BaseModel):
 #     data: str
@@ -38,7 +52,7 @@ class DataToPredictControled(BaseModel):
     data: List[Row] = Field(..., description="All features together")
 
 
-model = joblib.load("model.pkl")
+# model = joblib.load("model.pkl")
 
 
 # @app.post("/predict_input_features")

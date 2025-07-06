@@ -4,6 +4,8 @@ services:
       context: ./API
     ports:
       - "8000:8000"
+    env_file:
+      - .env
   
   ui_streamlit:
     build:
@@ -15,7 +17,7 @@ services:
 
   ui_gradio:
     build:
-      context: ./GradIO_UI
+      context: ./gradio_docker
     ports:
       - "7860:7860"
     depends_on:
