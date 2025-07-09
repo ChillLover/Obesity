@@ -77,7 +77,8 @@ deploy:
       | sed -e "s,__PROJECT_NAME__,${PROJECT_NAME},"
       | sed -e "s|__ALB_INGRESS_SUBNET__|${ALB_INGRESS_SUBNET}|"
       | sed -e "s|__ALB_INGRESS_SEC_GROUP__|${ALB_INGRESS_SEC_GROUP}|"
-      | sed -e "s|__PUBLIC_IP__|${PUBLIC_IP}|"
       | kubectl apply -f -
     # reads the k8s.yaml file
-    # and replaces the VERSION placeholder with the Docker image tag from the build stage, applies the Kubernetes configuration to deploy the app 
+    # and replaces the VERSION placeholder with the Docker image tag from the build stage, applies the Kubernetes configuration to deploy the app
+
+    #| sed -e "s|__PUBLIC_IP__|${PUBLIC_IP}|"
