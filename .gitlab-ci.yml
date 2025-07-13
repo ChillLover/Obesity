@@ -82,3 +82,4 @@ deploy:
     # and replaces the VERSION placeholder with the Docker image tag from the build stage, applies the Kubernetes configuration to deploy the app
 
     #| sed -e "s|__PUBLIC_IP__|${PUBLIC_IP}|"
+
