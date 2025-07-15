@@ -80,5 +80,3 @@ deploy:
       | kubectl apply -f -
     # reads the k8s.yaml file
     # and replaces the VERSION placeholder with the Docker image tag from the build stage, applies the Kubernetes configuration to deploy the app
-    # - kubectl rollout restart deployment api-obesity -n obesity
-    #| sed -e "s|__PUBLIC_IP__|${PUBLIC_IP}|"
