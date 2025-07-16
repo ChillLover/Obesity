@@ -68,7 +68,7 @@ data:
       server {
         listen 80;
         location = / {
-          proxy_pass http://api-__PROJECT_NAME__:80;
+          proxy_pass http://api-__PROJECT_NAME__;
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -164,12 +164,12 @@ data:
       }
     }
 ---
-apiVersion: networking.k8s.io/v1
-kind: IngressClass
-metadata:
-  name: yc-alb
-spec:
-  controller: ingress.alb.yc.io/yc-alb-ingress-controller
+# apiVersion: networking.k8s.io/v1
+# kind: IngressClass
+# metadata:
+#   name: yc-alb
+# spec:
+#   controller: ingress.alb.yc.io/yc-alb-ingress-controller
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -187,7 +187,7 @@ metadata:
     # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     # nginx.ingress.kubernetes.io/proxy-buffering: "off"
 spec:
-  ingressClassName: yc-alb
+  # ingressClassName: yc-alb
   tls:
     - hosts:
         - obesity.projects-pea.ru # Domain name for which the certificate is issued
