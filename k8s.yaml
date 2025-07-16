@@ -216,5 +216,5 @@ spec:
               service:
                 name: api-__PROJECT_NAME__
                 port:
-                  number: 800
+                  number: 80
 ---
