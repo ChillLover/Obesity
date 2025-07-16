@@ -191,7 +191,7 @@ spec:
   tls:
     - hosts:
         - obesity.projects-pea.ru # Domain name for which the certificate is issued
-      secretName: yc-certmgr-cert-id-64586520b81381d42d8d5519a430e445e78
+      secretName: yc-certmgr-cert-id-fpqhcibvubt3q09g4p96
   rules:
     - host: obesity.projects-pea.ru
       http:
