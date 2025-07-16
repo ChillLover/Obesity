@@ -210,4 +210,11 @@ spec:
                 name: ui-__PROJECT_NAME__
                 port:
                   number: 80
+          - path: /api-__PROJECT_NAME__
+            pathtype: Prefix
+            backend:
+              service:
+                name: api-__PROJECT_NAME__
+                port:
+                  number: 800
 ---
