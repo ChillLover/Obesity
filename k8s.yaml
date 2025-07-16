@@ -196,7 +196,7 @@ spec:
     - host: obesity.projects-pea.ru
       http:
         paths:
-          - path: "/" # path to the service, get from  location
+          - path: / # path to the service, get from  location
             pathType: Prefix
             backend:
               service:
