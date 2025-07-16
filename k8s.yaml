@@ -211,7 +211,7 @@ spec:
                 port:
                   number: 80
           - path: /api-__PROJECT_NAME__
-            pathtype: Prefix
+            pathType: Prefix
             backend:
               service:
                 name: api-__PROJECT_NAME__
