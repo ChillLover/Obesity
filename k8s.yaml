@@ -167,13 +167,20 @@ data:
 apiVersion: networking.k8s.io/v1
 kind: IngressClass
 metadata:
+  name: yc-alb
+spec:
+  controller: ingress.alb.yc.io/yc-alb-ingress-controller
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
   name: alb-__PROJECT_NAME__
   namespace: __PROJECT_NAME__
   annotations:
     ingress.alb.yc.io/external-ipv4-address: auto #Public access to the load balancer from the internet. #Enter the obtained IP address or set auto to get a new IP address automatically
     ingress.alb.yc.io/group-name: test # Group name. Ingress resources are grouped together, each group served by a separate load balancer.
     ingress.alb.yc.io/subnets: __ALB_INGRESS_SUBNET__  # One or more subnets hosting the Application Load Balancer L7 load balancer.
-    # ingress.alb.yc.io/security-groups: __ALB_INGRESS_SEC_GROUP__  # Security group for the Application Load Balancer L7 load balancer. 
+    ingress.alb.yc.io/security-groups: __ALB_INGRESS_SEC_GROUP__  # Security group for the Application Load Balancer L7 load balancer. 
     # cert-manager.io/cluster-issuer: "letsencrypt-prod"
     # nginx.ingress.kubernetes.io/proxy-body-size: "0"
     # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
