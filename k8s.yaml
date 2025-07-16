@@ -165,7 +165,7 @@ data:
     }
 ---
 apiVersion: networking.k8s.io/v1
-kind: Ingress
+kind: IngressClass
 metadata:
   name: alb-__PROJECT_NAME__
   namespace: __PROJECT_NAME__
