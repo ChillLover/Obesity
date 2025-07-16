@@ -180,6 +180,7 @@ metadata:
     # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     # nginx.ingress.kubernetes.io/proxy-buffering: "off"
 spec:
+  ingressClassName: yc-alb
   tls:
     - hosts:
         - obesity.projects-pea.ru # Domain name for which the certificate is issued
