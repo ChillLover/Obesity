@@ -196,14 +196,14 @@ spec:
     - host: obesity.projects-pea.ru
       http:
         paths:
-          - path: / # path to the service, get from  location
+          - path: /api-__PROJECT_NAME__ # path to the service, get from  location
             pathType: Prefix
             backend:
               service:
                 name: api-__PROJECT_NAME__
                 port:
                   number: 3000
-          - path: /ui-__PROJECT_NAME__
+          - path: /
             pathType: Prefix
             backend:
               service:
