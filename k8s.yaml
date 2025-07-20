@@ -49,7 +49,7 @@ spec:
   type: NodePort
   ports:
     - name: http
-      port: 8000 # port for external access to the service
+      port: 3000 # port for external access to the service 8000
       targetPort: 8000
       protocol: TCP
       nodePort: 30800 # The range of valid ports is 30000-32767
@@ -127,7 +127,7 @@ spec:
   type: NodePort
   ports:
     - name: http
-      port: 7860 # port for external access to the service
+      port: 3001 # port for external access to the service
       targetPort: 7860
       protocol: TCP
       nodePort: 30850 # The range of valid ports is 30000-32767
@@ -196,18 +196,19 @@ spec:
     - host: obesity.projects-pea.ru
       http:
         paths:
-          - path: /api
+          - path: / # path to the service, get from  location
             pathType: Prefix
             backend:
               service:
                 name: api-__PROJECT_NAME__
                 port:
-                  number: 8000
-          - path: /
+                  number: 3000
+          - path: /ui-__PROJECT_NAME__
             pathType: Prefix
             backend:
               service:
                 name: ui-__PROJECT_NAME__
                 port:
-                  number: 7860
+                  number: 3001
+
 ---
