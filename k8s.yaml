@@ -32,11 +32,11 @@ spec:
               readOnly: true
           resources:
             limits:
-              cpu: 1.5
-              memory: "1536Mi"
+              cpu: 0.5
+              memory: "512Mi"
             requests:
-              cpu: "100m"
-              memory: "112Mi"
+              cpu: "500m"
+              memory: "512Mi"
 ---
 apiVersion: v1
 kind: Service
