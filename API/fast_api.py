@@ -14,6 +14,8 @@ import os
 
 load_dotenv()
 
+print(os.system("cat .env"))
+
 mlflow.set_tracking_uri("http://84.201.180.128:8000/")
 
 client = clickhouse_connect.get_client(host=os.getenv("CH_IP"), port=8123, username=os.getenv("CLICKHOUSE_USER"), password=os.getenv("CLICKHOUSE_PASSWORD"))
