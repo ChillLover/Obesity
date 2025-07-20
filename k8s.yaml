@@ -152,7 +152,7 @@ data:
         listen 80;
         server_name obesity.projects-pea.ru www.obesity.projects-pea.ru;
         location /ui-__PROJECT_NAME__ {
-          proxy_pass http://ui-__PROJECT_NAME__:80;
+          proxy_pass http://ui-__PROJECT_NAME__;
           proxy_http_version 1.1;
           proxy_set_header Upgrade $http_upgrade;
           proxy_set_header Connection "upgrade";
@@ -196,14 +196,14 @@ spec:
     - host: obesity.projects-pea.ru
       http:
         paths:
-          - path: / # path to the service, get from  location
+          - path: /api
             pathType: Prefix
             backend:
               service:
                 name: api-__PROJECT_NAME__
                 port:
                   number: 80
-          - path: /ui-__PROJECT_NAME__
+          - path: /
             pathType: Prefix
             backend:
               service:
