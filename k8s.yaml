@@ -164,13 +164,6 @@ data:
       }
     }
 ---
-# apiVersion: networking.k8s.io/v1
-# kind: IngressClass
-# metadata:
-#   name: yc-alb
-# spec:
-#   controller: ingress.alb.yc.io/yc-alb-ingress-controller
----
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -181,13 +174,7 @@ metadata:
     ingress.alb.yc.io/group-name: __PROJECT_NAME__-ingress-group # Group name. Ingress resources are grouped together, each group served by a separate load balancer.
     ingress.alb.yc.io/subnets: __ALB_INGRESS_SUBNET__  # One or more subnets hosting the Application Load Balancer L7 load balancer.
     ingress.alb.yc.io/security-groups: __ALB_INGRESS_SEC_GROUP__  # Security group for the Application Load Balancer L7 load balancer. 
-    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    # nginx.ingress.kubernetes.io/proxy-body-size: "0"
-    # nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    # nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    # nginx.ingress.kubernetes.io/proxy-buffering: "off"
 spec:
-  # ingressClassName: yc-alb
   tls:
     - hosts:
         - obesity.projects-pea.ru # Domain name for which the certificate is issued

@@ -14,8 +14,6 @@ import os
 
 load_dotenv()
 
-print(os.system("cat .env"))
-
 mlflow.set_tracking_uri("http://84.201.180.128:8000/")
 
 client = clickhouse_connect.get_client(host=os.getenv("CH_IP"), port=8123, username=os.getenv("CLICKHOUSE_USER"), password=os.getenv("CLICKHOUSE_PASSWORD"))
@@ -24,11 +22,7 @@ run = client.query_df("select mlflow_url from logs.results order by save_date de
 
 model = mlflow.pyfunc.load_model(run)
 
-
 app = FastAPI(root_path="/api")
-
-# class DataToPredictStr(BaseModel):
-#     data: str
 
 
 class Row(BaseModel):
@@ -54,16 +48,6 @@ class DataToPredictControled(BaseModel):
     data: List[Row] = Field(..., description="All features together")
 
 
-# model = joblib.load("model.pkl")
-
-
-# @app.post("/predict_input_features")
-# async def predict_imput_features(raw_data: Row):
-#     df = pd.DataFrame.from_dict(json.loads(raw_data.model_dump_json())["data"])
-#     preds = pd.Series(model.predict(df))
-
-#     return {"Answer": preds.to_json(orien="records")}
-
 
 @app.post("/predict_features")
 async def predict_features(raw_data: DataToPredictControled):
@@ -71,11 +55,3 @@ async def predict_features(raw_data: DataToPredictControled):
     preds = pd.Series(model.predict(df))
 
     return {"Answer": preds.to_json(orient="records")}
-
-
-# @app.post("/predict")
-# async def predict(raw_data: DataToPredictStr):
-#     df = pd.read_json(raw_data.data, orient="records")
-#     preds = pd.Series(model.predict(df))
-
-#     return {"Answer": preds.to_json(orient="records")}
