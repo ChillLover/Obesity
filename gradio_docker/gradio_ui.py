@@ -9,7 +9,7 @@ def get_preds(data):
     data = pd.read_csv(data)
     data = data.to_dict(orient="records")
 
-    response = requests.post("http://api-obesity:3000/predict_features", json={"data": data}) #api:8000 | "https://obesity.projects-pea.ru/api/predict_features" | "http://api-obesity:3000/predict_features"
+    response = requests.post("http://api-obesity:3000/predict_features", json={"data": data}) # api:8000 | "https://obesity.projects-pea.ru/api/predict_features" | "http://api-obesity:3000/predict_features"
 
     if response.status_code == 200:
         preds = pd.read_json(response.json()["Answer"], orient="records")
