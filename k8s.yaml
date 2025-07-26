@@ -110,11 +110,11 @@ spec: # defines the desired state for the deployment
               readOnly: true  
           resources:
             limits:
-              cpu: 1.5
-              memory: "1536Mi"
+              cpu: "3"
+              memory: "3Gi"
             requests:
-              cpu: "500m"
-              memory: "512Mi"
+              cpu: "1"
+              memory: "1Gi"
 ---
 apiVersion: v1 # specifies the API version for the Service resource
 kind: Service
