@@ -22,7 +22,7 @@ run = client.query_df("select mlflow_url from logs.results order by save_date de
 
 model = mlflow.pyfunc.load_model(run)
 
-app = FastAPI(root_path="/api")
+app = FastAPI()
 
 
 class Row(BaseModel):
